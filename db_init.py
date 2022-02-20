@@ -1,4 +1,5 @@
 import sqlite3
+import os
 from sys import platform
 
 def init_db(path):
@@ -10,4 +11,6 @@ def init_db(path):
 
 if __name__ == "__main__":
     db_path = "/var/lib/bib-spaces-analyzer/spaces.db" if platform.startswith("linux") else "spaces.db"
-    init_db("test-0.db")
+    if os.path.isdir("var/lib/bib-spaces-analyzer/") is False:
+        os.mkdir("var/lib/bib-spaces-analyzer/")
+    init_db(db_path)
