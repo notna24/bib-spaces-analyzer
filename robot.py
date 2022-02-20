@@ -66,6 +66,14 @@ def init_db(path):
 
 
 if __name__ == "__main__":
+	from sys import platform
+	import os
 	print("seat fetching started...")
-	robot = Robot(URL, 0, 300, "test-0.db")
+	db_path = "/var/lib/bib-spaces-analyzer/spaces.db" if platform.startswith("linux") else "spaces.db"
+	if os.path.isdir("/var/lib/bib-spaces-analyzer/") is False and platform.startswith("linux"):
+		print("you first need to create the database. Please run the db_init.db as root.")
+		exit()
+	if os.path.isfile(db_path) is False:
+		init_db(db_path)
+	robot = Robot(URL, 0, 300, db_path)
 	print(robot.run())

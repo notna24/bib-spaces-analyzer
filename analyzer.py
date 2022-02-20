@@ -1,5 +1,6 @@
 import sqlite3
 import matplotlib
+from sys import platform
 
 def get_data(path):
     with sqlite3.connect(path) as con:
@@ -9,4 +10,5 @@ def get_data(path):
 
 
 if __name__ == "__main__":
-    get_data("test-0.db")
+    db_path = "/var/lib/bib-spaces-analyzer/spaces.db" if platform.startswith("linux") else "spaces.db"
+    get_data(db_path)
