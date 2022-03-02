@@ -1,6 +1,13 @@
 import sqlite3
-import matplotlib
+import matplotlib as mpl
 from sys import platform
+
+
+def find_least_visit_times(weeks):
+    pass
+
+def plot_timeinterval():
+    pass
 
 def get_data(path):
     with sqlite3.connect(path) as con:
