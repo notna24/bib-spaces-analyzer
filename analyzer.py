@@ -9,6 +9,7 @@ def find_least_visit_times(weeks):
 def plot_timeinterval():
     pass
 
+
 def get_data(path):
     with sqlite3.connect(path) as con:
         cur = con.cursor()
@@ -17,5 +18,6 @@ def get_data(path):
 
 
 if __name__ == "__main__":
-    db_path = "/var/lib/bib-spaces-analyzer/spaces.db" if platform.startswith("linux") else "spaces.db"
+    #db_path = "/var/lib/bib-spaces-analyzer/spaces.db" if platform.startswith("linux") else "spaces.db"
+    db_path = input("path to database")
     get_data(db_path)
