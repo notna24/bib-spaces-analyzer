@@ -1,3 +1,4 @@
+import time
 import sqlite3
 import matplotlib as mpl
 from sys import platform
@@ -10,10 +11,12 @@ def plot_timeinterval():
     pass
 
 
-def get_data(path):
+def get_data(path, start, end) -> list:
     with sqlite3.connect(path) as con:
         cur = con.cursor()
-        cur.execute("select * from bibs")
+        cur.execute("SELECT * FROM bibs WHERE date BETWEEN ? AND ?",
+		(start, end)
+	)
         print(cur.fetchall())
 
 
