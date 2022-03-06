@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import time
 import sqlite3
 import matplotlib as mpl
