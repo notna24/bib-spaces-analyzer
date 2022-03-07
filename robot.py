@@ -35,7 +35,7 @@ class Robot:
 			cur = con.cursor()
 			for id, info in data.items():
 				cur.execute("insert into bibs values (?, ?, ?, ?)", (
-					time.strftime('%Y-%m-%d %H:%M:%S')
+					time.strftime('%Y-%m-%d %H:%M:%S'),
 					id,
 					info.get("free_spaces"),
 					info.get("is_currently_open")
