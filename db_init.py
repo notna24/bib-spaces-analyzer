@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import sqlite3
 import os
 from sys import platform
@@ -5,7 +7,7 @@ from sys import platform
 def init_db(path):
     with sqlite3.connect(path) as con:
         cur = con.cursor()
-        cur.execute('''CREATE TABLE bibs (year, month, day, hour, minute, bib_id, free_seats, status)''')
+        cur.execute('''CREATE TABLE bibs (date DATETIME, bib_id, free_seats, status)''')
         con.commit()
 
 
