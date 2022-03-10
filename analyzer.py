@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
-from configparser import RawConfigParser
-import time
+import configparser
 import sqlite3
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -40,8 +39,10 @@ def get_data(path, start, end, bib) -> list:
 
 
 if __name__ == "__main__":
-	#db_path = "/var/lib/bib-spaces-analyzer/spaces.db" if platform.startswith("linux") else "spaces.db"
-	#db_path = input("path to database")
-    db_path = "test.db"
+    config = configparser.ConfigParser()
+    config.read("robot.conf")
+    db_dir = config.get("DATABASE", "DBParentDir")
+    db_name = config.get("DATABASE", "DBName")
+    db_path = db_dir + db_name
     get_data(db_path, "2022-01-01 00:00:00", "2023-01-01 00:00:00", 1)
     plot_timeinterval("test.db", "2022-01-01 00:00:00", "2023-01-01 00:00:00", ["1", "2", "3"])
