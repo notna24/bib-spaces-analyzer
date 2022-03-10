@@ -1,0 +1,15 @@
+[Unit]
+Description=bib spaces analyzer service
+Documentation=https://github.com/notna24/bib-spaces-analyzer
+After=network.target
+
+[SERVICE]
+Type=simple
+User=User
+ExecStart=/usr/bin/python3.9 /home/User/bib-spaces-analyzer/robot.py
+WorkingDirectory=/home/User/bib-spaces-analyzer/
+DefaulStartSec=2
+Restart=always
+
+[INSTALL]
+WantedBy=sysinit.target
