@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from sys import platform
 
-
 def find_least_visit_times(weeks):
 	pass
 
@@ -20,6 +19,7 @@ def plot_timeinterval(path, start, end, bibs):
     fig, ax = plt.subplots()
     for bib, t_s in data.items():
         ax.plot(t_s[0], t_s[1], label=bib)
+    ax.xaxis.set_major_locator(mdates.DayLocator((1,15)))
     fig.autofmt_xdate()
     ax.fmt_xdata = mdates.DateFormatter("%Y-%m-%d %H:%M:%S")
     ax.legend()
