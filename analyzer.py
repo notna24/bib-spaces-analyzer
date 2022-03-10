@@ -23,7 +23,7 @@ def plot_timeinterval(path, start, end, bibs):
     fig.autofmt_xdate()
     ax.fmt_xdata = mdates.DateFormatter("%Y-%m-%d %H:%M:%S")
     ax.legend()
-    plt.savefig("test_fig.png")
+    plt.show()
     
 
 	
