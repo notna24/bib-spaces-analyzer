@@ -10,7 +10,7 @@ def find_least_visit_times(weeks):
 	pass
 
 def plot_timeinterval(path, start, end, bibs):
-    #this function plots a the spaces in a certain time interval
+    #this function plots the spaces in a certain time interval
     data = {}
     for bib in bibs:
         raw_data = get_data(path, start, end, bib)
