@@ -12,4 +12,4 @@ DefaulStartSec=2
 Restart=always
 
 [INSTALL]
-WantedBy=sysinit.target
+WantedBy=multi-user.target
