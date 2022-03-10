@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import requests as req
 from requests.exceptions import ConnectionError
 import time
@@ -54,22 +56,33 @@ class Robot:
 		return resp.json()
 
 def init_db(path):
-	# just for development purposes
-	with sqlite3.connect(path) as con:
-		cur = con.cursor()
-		cur.execute('''CREATE TABLE bibs (year, month, day, hour, minute, bib_id, free_seats, status)''')
-		con.commit()
+    with sqlite3.connect(path) as con:
+        cur = con.cursor()
+        cur.execute('''CREATE TABLE bibs (date DATETIME, bib_id, free_seats, status)''')
+        con.commit()
 
 
 if __name__ == "__main__":
+	import configparser
 	from sys import platform
 	import os
-	print("seat fetching started...")
-	db_path = "/var/lib/bib-spaces-analyzer/spaces.db" if platform.startswith("linux") else "spaces.db"
-	if os.path.isdir("/var/lib/bib-spaces-analyzer/") is False and platform.startswith("linux"):
-		print("you first need to create the database. Please run the db_init.db as root.")
-		exit()
-	if os.path.isfile(db_path) is False:
-		init_db(db_path)
-	robot = Robot(URL, 0, 300, db_path)
+
+	config = configparser.ConfigParser()
+	config.read("robot.conf")
+	url = config.get("DEFAULT", "url")
+	db_dir = config.get("DATABASE", "DBParentDir")
+	db_name = config.get("DATABASE", "DBName")
+	interval = config.get("DEFAULT", "interval")
+
+	if os.path.isdir(db_dir) is False:
+		print(f"Database path not found. Creating folder {db_dir}")
+		os.makedirs(db_dir)
+
+	if os.path.isfile(db_dir + db_name) is False:
+		print("Database File was not found. Creating new Database!")
+		init_db(db_dir + db_name)
+
+	print("seat fetching started")
+
+	robot = Robot(url, 0, 300, db_dir + db_name)
 	print(robot.run())
