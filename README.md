@@ -6,7 +6,12 @@ the numbers differ in finals week. Just some fun things to do with the collected
 
 # run
 
+To run the program you first need to modify the robot.conf file. You need to replace the part of the DBParentDir where it says User with your username.
+Note: If you also want to run the robot as a systemd service, please follow the instructions below.
+
 # Running the robot as a service
+
+*_Read the #run section first and follow the instructions!_*
 
 There is a example service file included in the bib-spaces-analyzer/service directory.
 
