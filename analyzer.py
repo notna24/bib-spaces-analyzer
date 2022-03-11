@@ -15,17 +15,17 @@ def find_day_average(path, day, bib, freq="30min"):
     end = start + pd.DateOffset(1)
     dates = pd.date_range(start, end, freq=freq)
     averages = {}
-    for i, date in enumerate(dates):
+    for s_date, e_date in zip(dates, dates[1:]):
         with sqlite3.connect(path, detect_types=sqlite3.PARSE_DECLTYPES) as con:
+            con.row_factory = lambda cursor, row: row[0]
             cur = con.cursor()
-            print(bib, date, dates[i + 1])
             cur.execute("SELECT free_seats FROM bibs WHERE bib_id = ? AND date BETWEEN ? AND ?",
-            (bib, str(date), str(dates[i + 1]))
+            (bib, str(s_date), str(e_date))
             )
             data = cur.fetchall()
-        print(data)
+            
         if len(data) != 0:
-            averages[date] = sum(data)/len(data)
+            averages[str(s_date)] = sum(data)/len(data)
         else:
             pass
     return averages
@@ -65,5 +65,6 @@ if __name__ == "__main__":
     db_name = config.get("DATABASE", "DBName")
     db_path = db_dir + db_name
     #get_data(db_path, "2022-01-01 00:00:00", "2023-01-01 00:00:00", 1)
-    #plot_timeinterval(db_path, "2022-01-01 00:00:00", "2023-01-01 00:00:00", ["1", "2", "3", "4", "5"])
-    find_day_average(db_path, "2022-02-25", "1")
+    plot_timeinterval(db_path, "2022-01-01 00:00:00", "2023-01-01 00:00:00", ["1", "2", "3", "4", "5"])
+    averages_dict = find_day_average(db_path, "2022-03-11", "1")
+    print(averages_dict)
