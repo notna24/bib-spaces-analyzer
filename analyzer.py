@@ -2,12 +2,29 @@
 
 import configparser
 import sqlite3
+from numpy import average
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from sys import platform
 
-def find_least_visit_times(weeks):
-	pass
+def find_day_average(path, day, bib, freq="30min"):
+    # day should not include time, only date
+    start = pd.to_datetime(day)
+    end = start + pd.DateOffset(1)
+    dates = pd.date_range(start, end, freq=freq)
+    averages = {}
+    for i, date in enumerate(dates):
+        with sqlite3.connect(path) as con:
+            cur = con.cursor()
+            cur.execute("SELECT spaces FROM bibs WHERE bib_id = ? AND date BETWEEN ? AND ?",
+            (bib, date, dates[i + 1])
+        )
+        data = cur.fetchall()
+        averages[date] = sum(data)/len(data)
+    return averages
+
+
 
 def plot_timeinterval(path, start, end, bibs):
     #this function plots the spaces in a certain time interval
@@ -23,9 +40,6 @@ def plot_timeinterval(path, start, end, bibs):
     ax.fmt_xdata = mdates.DateFormatter("%Y-%m-%d %H:%M:%S")
     ax.legend()
     plt.show()
-    
-
-	
 
 
 def get_data(path, start, end, bib) -> list:
